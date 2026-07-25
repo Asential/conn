@@ -11,6 +11,11 @@ function setupIpcHandlers() {
     console.log('Other action:', data);
     event.reply('other-response', 'Some response');
   });
+
+  ipcMain.on("send-prompt", (event, data) => {
+    console.log("Received prompt:", data.prompt);
+    event.reply('send-prompt-response', 'Some response');
+  });
 }
 
 module.exports = { setupIpcHandlers };

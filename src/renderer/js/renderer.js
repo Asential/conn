@@ -1,13 +1,27 @@
-console.log('renderer.js loaded');
+const promptInput = document.getElementById('prompt-input');
+const sendBtn = document.getElementById('send-btn');
+const clearBtn = document.getElementById('clear-btn');
+const responsesDiv = document.getElementById('responses');
 
-document.getElementById('btn').addEventListener('click', () => {
-  console.log('Button clicked');
+sendBtn.addEventListener('click', () => {
+  const prompt = promptInput.value.trim();
+  if (!prompt) return;
+
+  responsesDiv.innerHTML = '';
+  window.electron.send('send-prompt', { prompt });
 });
 
-document.getElementById('btn').addEventListener('click', () => {
-  window.electron.send('button-clicked', 'some data');
+clearBtn.addEventListener('click', () => {
+  promptInput.value = '';
+  promptInput.focus();
 });
 
 window.electron.receive('response', (data) => {
-  console.log('Got response:', data);
+  const item = document.createElement('div');
+  item.className = 'response-item';
+  item.innerHTML = `
+    <div class="response-label">${data.model}</div>
+    <div class="response-text">${data.response}</div>
+  `;
+  responsesDiv.appendChild(item);
 });
