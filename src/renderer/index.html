@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Kai</title>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/themes.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Kai
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <button>💬 Chats</button>
+            <button>🤖 Agents</button>
+            <button>📚 Prompts</button>
+            <button>🛠 Tools</button>
+            <button>⚙ Settings</button>
+
+        </nav>
+
+    </aside>
+
+    <main class="workspace">
+
+        <header class="topbar">
+
+            <h2>New Chat</h2>
+
+            <select>
+
+                <option>GPT-5</option>
+                <option>Claude</option>
+                <option>Gemini</option>
+
+            </select>
+
+        </header>
+
+        <section class="chat-window">
+
+            <!-- Chat messages -->
+
+        </section>
+
+        <footer class="composer">
+
+            <textarea
+                placeholder="Message..."
+            ></textarea>
+
+            <button>Send</button>
+
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="js/renderer.js"></script>
+
+</body>
+
+</html>
