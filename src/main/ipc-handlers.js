@@ -1,5 +1,5 @@
 const { ipcMain } = require('electron');
-const { connectToBrowser, sendPromptToTab, tabs } = require('./browser-controller');
+const { connectToBrowser, sendPromptToTab, launchEdgeDebugging, getEdgeDebugStatus } = require('./browser-controller');
 
 function setupIpcHandlers() {
   ipcMain.on('button-clicked', (event, data) => {
@@ -22,6 +22,24 @@ function setupIpcHandlers() {
     try {
       const availableTabs = await connectToBrowser();
       return { success: true, tabs: availableTabs };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  });
+
+  ipcMain.handle('launch-edge-debug', async () => {
+    try {
+      const result = await launchEdgeDebugging();
+      return { success: true, ...result };
+    } catch (err) {
+      return { success: false, error: err.message };
+    }
+  });
+
+  ipcMain.handle('get-edge-status', async () => {
+    try {
+      const result = await getEdgeDebugStatus();
+      return { success: true, ...result };
     } catch (err) {
       return { success: false, error: err.message };
     }

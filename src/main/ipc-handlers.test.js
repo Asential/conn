@@ -6,7 +6,9 @@ jest.mock('electron', () => ({
 }));
 jest.mock('./browser-controller', () => ({
   connectToBrowser: jest.fn(),
-  sendPromptToTab: jest.fn()
+  sendPromptToTab: jest.fn(),
+  launchEdgeDebugging: jest.fn(),
+  getEdgeDebugStatus: jest.fn()
 }));
 
 const { setupIpcHandlers } = require('./ipc-handlers');
@@ -28,6 +30,20 @@ describe('IPC Handlers', () => {
   it('should register send-prompt handler', () => {
     expect(ipcMain.handle).toHaveBeenCalledWith(
       'send-prompt',
+      expect.any(Function)
+    );
+  });
+
+  it('should register launch-edge-debug handler', () => {
+    expect(ipcMain.handle).toHaveBeenCalledWith(
+      'launch-edge-debug',
+      expect.any(Function)
+    );
+  });
+
+  it('should register get-edge-status handler', () => {
+    expect(ipcMain.handle).toHaveBeenCalledWith(
+      'get-edge-status',
       expect.any(Function)
     );
   });
