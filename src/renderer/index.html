@@ -1,40 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LLM Consolidator</title>
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
+  <title>LLM Chat</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+    }
+    .container { display: flex; height: 100vh; }
+    .sidebar {
+      width: 200px;
+      background: #1a1a1a;
+      border-right: 1px solid #2a2a2a;
+      padding: 20px;
+    }
+    .models {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .model-btn {
+      padding: 10px;
+      background: #2a2a2a;
+      border: none;
+      border-radius: 6px;
+      color: #e0e0e0;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .model-btn.active {
+      background: #10a37f;
+    }
+    .chat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+    .message {
+      margin-bottom: 15px;
+      padding: 12px;
+      background: #1a1a1a;
+      border-radius: 6px;
+      border-left: 3px solid #10a37f;
+    }
+    .message.user {
+      border-left-color: #666;
+      background: #252525;
+    }
+    .input-area {
+      display: flex;
+      gap: 10px;
+    }
+    textarea {
+      flex: 1;
+      padding: 12px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      color: #e0e0e0;
+      font-family: inherit;
+      resize: none;
+      outline: none;
+    }
+    button {
+      padding: 12px 20px;
+      background: #10a37f;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    button:hover { background: #0d8e6f; }
+    .status {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>LLM Consolidator</h1>
-      <p class="subtitle">Run prompts across multiple models</p>
-    </header>
-
-    <div class="content">
-      <div class="panel">
-        <div class="panel-header">Input</div>
-        <div class="panel-body">
-          <textarea id="prompt-input" placeholder="Enter your prompt..."></textarea>
-        </div>
-        <div class="controls">
-          <button class="btn-primary" id="send-btn">Send</button>
-          <button class="btn-secondary" id="clear-btn">Clear</button>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header">Responses</div>
-        <div class="panel-body" id="responses">
-          <p style="color: #666; font-size: 13px;">Responses will appear here</p>
-        </div>
+    <div class="sidebar">
+      <h3 style="margin-bottom: 15px; font-size: 14px;">Models</h3>
+      <div class="models" id="models"></div>
+      <button id="connect-btn" style="width: 100%; margin-top: 20px;">Connect</button>
+    </div>
+    <div class="chat">
+      <div class="status" id="status">Not connected</div>
+      <div class="messages" id="messages"></div>
+      <div class="input-area">
+        <textarea id="prompt" placeholder="Type prompt..."></textarea>
+        <button id="send">Send</button>
       </div>
     </div>
   </div>
-
   <script src="js/renderer.js"></script>
 </body>
 </html>
